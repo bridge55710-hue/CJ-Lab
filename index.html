@@ -76,7 +76,15 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Custom Scrollbar */
+        /* 認証前の管理画面を隠す */
+        #admin-section {
+            display: none;
+        }
+
+        #admin-section.authorized {
+            display: block;
+        }
+
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -102,16 +110,18 @@
                 </div>
                 
                 <nav class="hidden lg:flex space-x-8">
-                    <a href="#about" class="text-sm font-medium text-body hover:text-navy transition-colors">About</a>
-                    <a href="#research" class="text-sm font-medium text-body hover:text-navy transition-colors">Research</a>
-                    <a href="#insights" class="text-sm font-medium text-body hover:text-navy transition-colors">News & Insights</a>
-                    <a href="#contact" class="text-sm font-medium text-body hover:text-navy transition-colors">Contact</a>
+                    <a href="#about" class="text-sm font-bold tracking-widest uppercase text-body hover:text-navy transition-colors">About</a>
+                    <a href="#insights" class="text-sm font-bold tracking-widest uppercase text-body hover:text-navy transition-colors">News</a>
+                    <a href="#research" class="text-sm font-bold tracking-widest uppercase text-body hover:text-navy transition-colors">Research</a>
+                    <a href="#contact" class="text-sm font-bold tracking-widest uppercase text-navy border-b-2 border-navy/20">Contact</a>
                 </nav>
 
-                <div class="hidden md:flex items-center gap-4">
-                    <a href="#admin-section" class="bg-navy text-white px-6 py-2.5 text-sm font-medium hover:bg-navy-light transition-colors duration-200 rounded-sm">
-                        レポート投稿
-                    </a>
+                <!-- 管理者ログインボタン -->
+                <div class="hidden md:flex items-center">
+                    <button id="admin-login-trigger" class="flex items-center gap-2 text-gray-300 hover:text-navy px-4 py-2 text-[10px] font-bold transition-colors duration-200 uppercase tracking-tighter">
+                        <i data-lucide="lock" class="w-3 h-3"></i>
+                        Staff Only
+                    </button>
                 </div>
 
                 <div class="flex items-center lg:hidden">
@@ -124,141 +134,124 @@
 
         <!-- Mobile Menu -->
         <div class="lg:hidden hidden bg-white border-t border-gray-100" id="mobile-menu">
-            <div class="px-2 pt-2 pb-6 space-y-1 sm:px-3 shadow-lg">
-                <a href="#about" class="block px-3 py-3 text-base font-medium text-body hover:bg-surface hover:text-navy">About</a>
-                <a href="#research" class="block px-3 py-3 text-base font-medium text-body hover:bg-surface hover:text-navy">Research</a>
-                <a href="#insights" class="block px-3 py-3 text-base font-medium text-body hover:bg-surface hover:text-navy">News & Insights</a>
-                <a href="#contact" class="block px-3 py-3 text-base font-medium text-body hover:bg-surface hover:text-navy">Contact</a>
-                <a href="#admin-section" class="block px-3 py-3 text-base font-medium text-navy bg-surface">レポート投稿</a>
+            <div class="px-2 pt-2 pb-6 space-y-1 sm:px-3 shadow-lg font-bold uppercase tracking-widest text-xs">
+                <a href="#about" class="block px-3 py-4 text-body hover:bg-surface hover:text-navy">About Us</a>
+                <a href="#insights" class="block px-3 py-4 text-body hover:bg-surface hover:text-navy">Latest News</a>
+                <a href="#research" class="block px-3 py-4 text-body hover:bg-surface hover:text-navy">Research Portfolio</a>
+                <a href="#contact" class="block px-3 py-4 text-navy bg-surface">Contact Info</a>
             </div>
         </div>
     </header>
 
     <main>
         <!-- Hero Section -->
-        <section class="relative pt-32 pb-20 md:pt-48 md:pb-32 flex items-center min-h-[90vh] border-b border-gray-200">
+        <section class="relative pt-32 pb-16 md:pt-48 md:pb-24 flex items-center min-h-[85vh]">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
                 <div class="max-w-5xl fade-up">
-                    <span class="block text-sm font-bold tracking-widest text-navy uppercase mb-4">CJ-Lab</span>
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-semibold text-navy leading-tight mb-10">
-                        エビデンスに基づく政策提言で<br class="hidden md:block">日中関係の前進、日本の国力を高めます。
+                    <span class="block text-sm font-bold tracking-widest text-navy uppercase mb-6 flex items-center gap-3">
+                        <span class="w-10 h-[1px] bg-navy"></span>
+                        Independent Policy Laboratory
+                    </span>
+                    <h1 class="text-4xl md:text-5xl lg:text-7xl font-serif font-semibold text-navy leading-tight mb-12">
+                        エビデンスに基づく提言で<br class="hidden md:block">日中関係を再定義する。
                     </h1>
                     
-                    <div class="space-y-6 text-gray-600 max-w-4xl font-sans font-light">
-                        <p class="text-lg md:text-xl leading-relaxed">
-                            私たちは、日中両国にとっての「あるべき戦略」を、感情や立場に左右されることなく、客観的データと多角的な分析に基づいて描き出す独立系政策ラボラトリーです。
-                        </p>
-                        <p class="text-base md:text-lg leading-relaxed">
-                            政治・経済・安全保障・技術・産業構造といった複層的なテーマを横断し、短期的な利害ではなく、中長期的な国益と地域の安定を見据えた提言を行います。
-                            複雑化する国際環境の中で、日中関係は対立でも迎合でもない、冷静で戦略的な選択を必要としています。私たちはエビデンスに基づく検証と、構造的な洞察に基づくシナリオ設計を通じて、両国にとって持続可能で実行可能な選択肢を提示します。
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                        <div class="space-y-6 text-gray-600 font-sans font-light">
+                            <p class="text-lg md:text-xl leading-relaxed">
+                                CJ-Labは、日中両国にとっての「あるべき戦略」を客観的データと多角的な分析に基づいて描き出す、独立系政策ラボラトリーです。
+                            </p>
+                        </div>
+                        <div class="flex flex-col sm:flex-row items-start lg:items-end gap-4">
+                            <a href="#insights" class="w-full sm:w-auto inline-flex justify-center items-center px-10 py-4 bg-navy text-white text-sm font-bold hover:bg-navy-light transition-all duration-300 rounded-sm tracking-widest">
+                                最新の論考を見る
+                            </a>
+                            <a href="#contact" class="w-full sm:w-auto inline-flex justify-center items-center px-10 py-4 border border-navy text-navy text-sm font-bold hover:bg-surface transition-all duration-300 rounded-sm tracking-widest">
+                                お問い合わせ
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- News & Insights -->
+        <section id="insights" class="py-24 border-y border-gray-100 bg-surface/50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 fade-up">
+                    <div class="lg:col-span-4">
+                        <h2 class="text-xs font-bold tracking-widest text-navy/40 uppercase mb-4">News & Updates</h2>
+                        <h3 class="text-3xl font-serif font-semibold text-navy mb-8">最新情報</h3>
+                        <p class="text-gray-600 text-sm mb-8 leading-loose">
+                            弊ラボによる緊急提言、メディア掲載、最新の調査レポートを時系列で掲載しています。
                         </p>
                     </div>
+                    
+                    <div class="lg:col-span-8">
+                        <div id="loading-reports" class="py-12 flex justify-center items-center gap-3 text-gray-400 italic">
+                            <div class="spinner"></div>
+                            最新のデータを取得中...
+                        </div>
+                        <div id="report-list" class="space-y-0">
+                            <!-- Firebase data will be injected here -->
+                        </div>
+                        <div id="no-reports" class="hidden py-12 text-center border border-dashed border-gray-200 rounded-lg">
+                            <p class="text-gray-400 text-sm italic tracking-widest">NO RECENT UPDATES</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                    <div class="flex flex-col sm:flex-row gap-4 mt-12">
-                        <a href="#research" class="inline-flex justify-center items-center px-8 py-4 bg-navy text-white text-base font-medium hover:bg-navy-light transition-colors duration-300 rounded-sm">
-                            研究分野を見る
-                            <i data-lucide="arrow-right" class="ml-2 w-4 h-4"></i>
-                        </a>
-                        <a href="#about" class="inline-flex justify-center items-center px-8 py-4 border border-navy text-navy text-base font-medium hover:bg-surface transition-colors duration-300 rounded-sm">
-                            活動理念
-                        </a>
+        <!-- Research Areas -->
+        <section id="research" class="py-24 md:py-32">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="mb-20 fade-up">
+                    <h2 class="text-xs font-bold tracking-widest text-navy/40 uppercase mb-4">Research Portfolio</h2>
+                    <h3 class="text-3xl md:text-4xl font-serif font-semibold text-navy">主要研究分野</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border border-gray-200 divide-y md:divide-y-0 md:divide-x divide-gray-200 fade-up">
+                    <div class="p-12 hover:bg-surface transition-all">
+                        <i data-lucide="microscope" class="w-8 h-8 mb-8 text-navy/40"></i>
+                        <h4 class="text-xl font-serif font-bold text-navy mb-4">先端技術と経済安保</h4>
+                        <p class="text-gray-600 text-sm font-light leading-relaxed">半導体、AI、量子技術における日中間の技術覇権とサプライチェーンの強靭化に関する研究。</p>
+                    </div>
+                    <div class="p-12 hover:bg-surface transition-all">
+                        <i data-lucide="bar-chart-3" class="w-8 h-8 mb-8 text-navy/40"></i>
+                        <h4 class="text-xl font-serif font-bold text-navy mb-4">マクロ経済・金融動態</h4>
+                        <p class="text-gray-600 text-sm font-light leading-relaxed">中国のデフレ圧力、不動産市場、および円・人民元の為替動向が日本経済に与える影響の分析。</p>
+                    </div>
+                    <div class="p-12 hover:bg-surface transition-all">
+                        <i data-lucide="compass" class="w-8 h-8 mb-8 text-navy/40"></i>
+                        <h4 class="text-xl font-serif font-bold text-navy mb-4">地政学的リスク管理</h4>
+                        <p class="text-gray-600 text-sm font-light leading-relaxed">台湾海峡情勢、多国間枠組みにおける外交戦略、および企業のカントリーリスク評価。</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- About -->
-        <section id="about" class="py-24 md:py-32 bg-surface">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="max-w-4xl mx-auto fade-up">
-                    <div class="text-center mb-16">
-                        <h2 class="text-sm font-bold tracking-widest text-navy uppercase mb-3">About Us</h2>
-                        <h3 class="text-3xl font-serif font-semibold text-navy">「知」を紡ぎ、社会の意思決定を支える</h3>
+        <section id="about" class="py-24 md:py-32 bg-navy text-white relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-1/2 h-full bg-white/5 skew-x-12 translate-x-32"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="max-w-4xl fade-up">
+                    <div class="mb-16">
+                        <h2 class="text-xs font-bold tracking-widest text-white/40 uppercase mb-4">Philosophy</h2>
+                        <h3 class="text-3xl md:text-5xl font-serif font-semibold leading-tight">
+                            「感情」ではなく「エビデンス」を、<br>「対立」ではなく「戦略」を。
+                        </h3>
                     </div>
                     
-                    <div class="space-y-12 text-gray-600 font-sans font-light">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 text-white/70 font-sans font-light">
                         <div class="space-y-6">
-                            <p class="text-base md:text-lg">
-                                CJ-Labは、日中関係を単なる外交課題としてではなく、国家戦略・産業構造・技術競争・安全保障環境が交錯する総合的な戦略空間として捉えます。私たちの使命は、起きている事象を説明することではなく、その先にある力学を見極め、政策決定者が取り得る具体的な戦略オプションを提示することにあります。
-                            </p>
-                            <p class="text-base md:text-lg font-medium text-navy">
-                                分析は目的ではなく、戦略設計のための基盤です。
+                            <p class="text-base md:text-lg leading-relaxed">
+                                複雑化する国際環境の中で、日中関係は冷静で戦略的な選択を必要としています。私たちは制度、産業、資源、技術、人口動態、地政学的リスクといった複数のレイヤーを統合し、将来シナリオを描きます。
                             </p>
                         </div>
-
-                        <div class="space-y-6">
-                            <p class="text-base md:text-lg">
-                                制度、産業、資源、技術、人口動態、地政学的リスクといった複数のレイヤーを統合し、将来シナリオを描きます。そのうえで、競争と協調が併存する日中関係において、リスクを管理しながら国益を最大化する現実的な戦略を構築します。
+                        <div class="space-y-6 text-base md:text-lg leading-relaxed">
+                            <p>
+                                重要なのは、実行可能であること、持続可能であること、そして戦略として一貫していることです。CJ-Labは、短期的な政策論争を超え、中長期的視野から政策の優先順位と選択肢を明確化します。
                             </p>
-                            <p class="text-base md:text-lg">
-                                私たちは、理想論にも対立構図にも依存しません。重要なのは、実行可能であること、持続可能であること、そして戦略として一貫していることです。CJ-Labは、短期的な政策論争を超え、中長期的視野から政策の優先順位と選択肢を明確化します。
-                            </p>
-                            <p class="text-lg md:text-xl font-serif font-semibold text-navy border-l-4 border-navy pl-6 py-2 bg-white/50">
-                                静かな分析の上に、強い構想を築く。<br>
-                                <span class="text-sm font-sans font-medium text-gray-500">それが、私たちの戦略設計思想です。</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Research -->
-        <section id="research" class="py-24 md:py-32">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="mb-16 fade-up">
-                    <h2 class="text-sm font-bold tracking-widest text-gray-500 uppercase mb-3">Research Areas</h2>
-                    <h3 class="text-3xl md:text-4xl font-serif font-semibold text-navy">主要研究領域</h3>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 fade-up">
-                    <div class="p-8 border border-gray-200 bg-white group hover:shadow-lg transition-all">
-                        <div class="flex justify-between items-start mb-6">
-                            <span class="px-3 py-1 bg-surface text-navy text-xs font-semibold rounded-sm">イノベーション</span>
-                            <i data-lucide="lightbulb" class="w-5 h-5 text-gray-400 group-hover:text-navy transition-colors"></i>
-                        </div>
-                        <h4 class="text-xl font-serif font-semibold text-navy mb-3">先端技術と産業構造の変革</h4>
-                        <p class="text-gray-600 text-sm">AI、DX、次世代エネルギー技術がもたらす産業変革を分析し、持続可能なエコシステムの構築を提言します。</p>
-                    </div>
-                    <div class="p-8 border border-gray-200 bg-white group hover:shadow-lg transition-all">
-                        <div class="flex justify-between items-start mb-6">
-                            <span class="px-3 py-1 bg-surface text-navy text-xs font-semibold rounded-sm">経済安全保障</span>
-                            <i data-lucide="shield" class="w-5 h-5 text-gray-400 group-hover:text-navy transition-colors"></i>
-                        </div>
-                        <h4 class="text-xl font-serif font-semibold text-navy mb-3">サプライチェーンとリスク管理</h4>
-                        <p class="text-gray-600 text-sm">地政学的リスクが経済活動に与える影響を評価。供給網強靭化や技術流出防止策を研究します。</p>
-                    </div>
-                    <div class="p-8 border border-gray-200 bg-white group hover:shadow-lg transition-all">
-                        <div class="flex justify-between items-start mb-6">
-                            <span class="px-3 py-1 bg-surface text-navy text-xs font-semibold rounded-sm">政治経済全般</span>
-                            <i data-lucide="globe" class="w-5 h-5 text-gray-400 group-hover:text-navy transition-colors"></i>
-                        </div>
-                        <h4 class="text-xl font-serif font-semibold text-navy mb-3">日中関係と国際秩序の動向</h4>
-                        <p class="text-gray-600 text-sm">マクロ経済、統治モデル、多国間枠組みにおける役割を分析. 共通課題への共同対処案を提示します。</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Insights / News -->
-        <section id="insights" class="py-24 border-t border-gray-200 bg-white">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 fade-up">
-                    <div class="lg:col-span-4">
-                        <h2 class="text-sm font-bold tracking-widest text-gray-500 uppercase mb-3">News & Insights</h2>
-                        <h3 class="text-3xl font-serif font-semibold text-navy mb-6">最新ニュース・論考</h3>
-                        <p class="text-gray-600 mb-8">CJ-Labによる日々の分析、政策評価、緊急提言、および弊ラボの活動に関する最新情報をお届けします。</p>
-                    </div>
-                    
-                    <div class="lg:col-span-8 flex flex-col">
-                        <div id="loading-reports" class="py-12 flex justify-center items-center gap-3 text-gray-400 italic">
-                            <div class="spinner"></div>
-                            読み込み中...
-                        </div>
-                        <div id="report-list" class="space-y-0">
-                            <!-- Firebase data will be injected here -->
-                        </div>
-                        <div id="no-reports" class="hidden py-12 text-center border-2 border-dashed border-gray-100 rounded-lg">
-                            <p class="text-gray-400 text-sm italic">現在公開されているレポートはありません。</p>
                         </div>
                     </div>
                 </div>
@@ -266,127 +259,123 @@
         </section>
 
         <!-- Contact Section -->
-        <section id="contact" class="py-24 md:py-32 bg-navy text-white">
+        <section id="contact" class="py-24 md:py-32 bg-white">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start fade-up">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center fade-up">
                     <div>
-                        <h2 class="text-sm font-bold tracking-widest text-gray-400 uppercase mb-3">Contact</h2>
-                        <h3 class="text-3xl md:text-4xl font-serif font-semibold mb-8">お問い合わせ</h3>
-                        <p class="text-gray-300 mb-10 leading-relaxed">
-                            共同研究のご提案、メディア取材、講演依頼、その他弊ラボの活動に関するお問い合わせは、右記のフォームより承っております。担当者より追ってご連絡させていただきます。
+                        <h2 class="text-xs font-bold tracking-widest text-navy/40 uppercase mb-4">Contact</h2>
+                        <h3 class="text-3xl md:text-5xl font-serif font-semibold text-navy mb-8 leading-tight">お問い合わせ</h3>
+                        <p class="text-gray-600 mb-12 text-lg font-light leading-relaxed">
+                            共同研究、メディア取材、講演依頼、および弊ラボの活動に関するご質問は、以下のフォームよりお送りください。
                         </p>
-                        <div class="space-y-6">
-                            <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
-                                    <i data-lucide="mail" class="w-5 h-5"></i>
-                                </div>
-                                <div>
-                                    <p class="text-xs text-gray-400 uppercase tracking-wider">Email</p>
-                                    <p class="font-medium">info@cj-lab.example.org</p>
-                                </div>
+                        <div class="flex items-center gap-6">
+                            <div class="w-12 h-12 rounded-full border border-navy/10 flex items-center justify-center text-navy">
+                                <i data-lucide="mail" class="w-5 h-5"></i>
                             </div>
-                            <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
-                                    <i data-lucide="map-pin" class="w-5 h-5"></i>
-                                </div>
-                                <div>
-                                    <p class="text-xs text-gray-400 uppercase tracking-wider">Office</p>
-                                    <p class="font-medium">東京都千代田区（詳細非公開）</p>
-                                </div>
+                            <div>
+                                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest">Inquiry Email</p>
+                                <p class="font-medium text-navy">contact@cj-lab.example.org</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="bg-white text-navy p-8 rounded-sm">
+                    <div class="bg-surface p-8 md:p-12 border border-gray-100 rounded-sm">
                         <form id="contact-form" class="space-y-6">
-                            <div>
-                                <label class="block text-xs font-bold text-gray-500 uppercase mb-2">お名前 / 組織名</label>
-                                <input type="text" id="contact-name" required class="w-full px-4 py-3 bg-surface border border-gray-200 focus:border-navy focus:outline-none rounded-sm transition-colors">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">お名前 / 氏名</label>
+                                    <input type="text" id="contact-name" required class="w-full px-4 py-3 bg-white border border-gray-200 focus:border-navy focus:outline-none text-sm transition-colors rounded-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">所属機関</label>
+                                    <input type="text" id="contact-org" class="w-full px-4 py-3 bg-white border border-gray-200 focus:border-navy focus:outline-none text-sm transition-colors rounded-sm">
+                                </div>
                             </div>
                             <div>
-                                <label class="block text-xs font-bold text-gray-500 uppercase mb-2">メールアドレス</label>
-                                <input type="email" id="contact-email" required class="w-full px-4 py-3 bg-surface border border-gray-200 focus:border-navy focus:outline-none rounded-sm transition-colors">
+                                <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">メールアドレス</label>
+                                <input type="email" id="contact-email" required class="w-full px-4 py-3 bg-white border border-gray-200 focus:border-navy focus:outline-none text-sm transition-colors rounded-sm">
                             </div>
                             <div>
-                                <label class="block text-xs font-bold text-gray-500 uppercase mb-2">お問い合わせ内容</label>
-                                <textarea id="contact-message" rows="5" required class="w-full px-4 py-3 bg-surface border border-gray-200 focus:border-navy focus:outline-none rounded-sm transition-colors"></textarea>
+                                <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">メッセージ内容</label>
+                                <textarea id="contact-message" rows="5" required class="w-full px-4 py-3 bg-white border border-gray-200 focus:border-navy focus:outline-none text-sm transition-colors rounded-sm"></textarea>
                             </div>
-                            <button type="submit" id="contact-submit" class="w-full bg-navy text-white py-4 font-bold hover:bg-navy-light transition-all flex justify-center items-center gap-2 rounded-sm">
-                                <i data-lucide="send" class="w-4 h-4"></i>
-                                送信する
+                            <button type="submit" id="contact-submit" class="w-full bg-navy text-white py-4 font-bold text-xs uppercase tracking-[0.2em] hover:bg-navy-light transition-all flex justify-center items-center gap-2 rounded-sm shadow-sm">
+                                <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                                Send Message
                             </button>
                         </form>
-                        <div id="contact-status" class="mt-4 text-center text-sm font-medium hidden"></div>
+                        <div id="contact-status" class="mt-4 text-center text-xs font-bold hidden"></div>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Admin Section -->
-        <section id="admin-section" class="py-24 bg-surface border-t border-gray-200">
-            <div class="max-w-3xl mx-auto px-4 sm:px-6">
-                <div class="bg-white p-8 md:p-12 shadow-sm border border-gray-200 rounded-sm">
-                    <h3 class="text-2xl font-serif font-semibold text-navy mb-8 flex items-center gap-2">
-                        <i data-lucide="plus-circle" class="w-6 h-6"></i>
-                        新規レポート投稿（管理）
-                    </h3>
+        <section id="admin-section" class="py-24 bg-gray-50 border-t border-gray-100">
+            <div class="max-w-3xl mx-auto px-4">
+                <div class="bg-white p-10 border border-gray-200 shadow-sm rounded-sm">
+                    <div class="flex justify-between items-center mb-10">
+                        <div>
+                            <h3 class="text-xs font-bold text-gray-400 tracking-[0.3em] uppercase mb-2">Staff Terminal</h3>
+                            <p class="text-2xl font-serif text-navy">レポート新規投稿</p>
+                        </div>
+                        <button id="admin-logout" class="text-[10px] font-bold text-red-400 hover:text-red-600 uppercase tracking-widest">Logout</button>
+                    </div>
                     
                     <form id="report-form" class="space-y-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label class="block text-xs font-bold text-gray-500 uppercase mb-2">公開日</label>
-                                <input type="date" id="form-date" required class="w-full px-4 py-2 bg-surface border border-gray-200 focus:border-navy focus:outline-none rounded-sm transition-colors">
+                                <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">公開日</label>
+                                <input type="date" id="form-date" required class="w-full px-4 py-2 bg-surface border border-gray-200 text-sm focus:outline-none">
                             </div>
                             <div>
-                                <label class="block text-xs font-bold text-gray-500 uppercase mb-2">カテゴリ</label>
-                                <select id="form-category" class="w-full px-4 py-2 bg-surface border border-gray-200 focus:border-navy focus:outline-none rounded-sm transition-colors">
-                                    <option value="政策提言">政策提言</option>
-                                    <option value="論考">論考</option>
-                                    <option value="ニュース">ニュース</option>
-                                    <option value="イベント報告">イベント報告</option>
-                                    <option value="プレスリリース">プレスリリース</option>
+                                <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">カテゴリ</label>
+                                <select id="form-category" class="w-full px-4 py-2 bg-surface border border-gray-200 text-sm focus:outline-none font-bold">
+                                    <option value="POLICY">政策提言</option>
+                                    <option value="INSIGHT">論考</option>
+                                    <option value="NEWS">ニュース</option>
+                                    <option value="EVENT">イベント報告</option>
                                 </select>
                             </div>
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2">タイトル</label>
-                            <input type="text" id="form-title" required placeholder="題名を入力してください" class="w-full px-4 py-2 bg-surface border border-gray-200 focus:border-navy focus:outline-none rounded-sm transition-colors">
+                            <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">タイトル</label>
+                            <input type="text" id="form-title" required placeholder="レポートの題名" class="w-full px-4 py-2 bg-surface border border-gray-200 text-sm focus:outline-none">
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2">概要</label>
-                            <textarea id="form-summary" rows="3" required placeholder="要約を記入してください" class="w-full px-4 py-2 bg-surface border border-gray-200 focus:border-navy focus:outline-none rounded-sm transition-colors"></textarea>
+                            <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">概要（サマリー）</label>
+                            <textarea id="form-summary" rows="3" required placeholder="150文字程度の要約" class="w-full px-4 py-2 bg-surface border border-gray-200 text-sm focus:outline-none"></textarea>
                         </div>
                         <div>
-                            <label class="block text-xs font-bold text-gray-500 uppercase mb-2">URL (任意)</label>
-                            <input type="url" id="form-url" placeholder="https://..." class="w-full px-4 py-2 bg-surface border border-gray-200 focus:border-navy focus:outline-none rounded-sm transition-colors">
+                            <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">外部リンク URL（任意）</label>
+                            <input type="url" id="form-url" placeholder="https://..." class="w-full px-4 py-2 bg-surface border border-gray-200 text-sm focus:outline-none">
                         </div>
                         
-                        <div class="pt-4">
-                            <button type="submit" id="submit-btn" class="w-full bg-navy text-white py-4 font-bold hover:bg-navy-light transition-all flex justify-center items-center gap-2 rounded-sm">
-                                <i data-lucide="upload-cloud" class="w-4 h-4"></i>
-                                レポートを公開する
-                            </button>
-                        </div>
+                        <button type="submit" id="submit-btn" class="w-full bg-navy text-white py-4 text-xs font-bold uppercase tracking-[0.3em] hover:bg-navy-light transition-all rounded-sm">
+                            Publish Insight
+                        </button>
                     </form>
-                    <div id="status-message" class="mt-4 text-center text-sm font-medium hidden"></div>
+                    <div id="status-message" class="mt-4 text-center text-sm font-bold hidden"></div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-navy-dark text-white pt-20 pb-10 border-t border-white/5">
+    <footer class="bg-white border-t border-gray-100 pt-20 pb-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-12">
-                <div class="font-serif font-bold text-2xl">CJ-Lab</div>
-                <nav class="flex gap-8 text-sm text-gray-400">
-                    <a href="#about" class="hover:text-white transition-colors">About</a>
-                    <a href="#research" class="hover:text-white transition-colors">Research</a>
-                    <a href="#insights" class="hover:text-white transition-colors">News</a>
-                    <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+            <div class="flex flex-col md:flex-row justify-between items-center gap-12 mb-16">
+                <div class="flex flex-col items-center md:items-start gap-4">
+                    <div class="font-serif font-bold text-2xl text-navy">CJ-Lab</div>
+                    <p class="text-xs text-gray-400 tracking-widest font-light">Evidence-Based Strategy For Future Relations.</p>
+                </div>
+                <nav class="flex flex-wrap justify-center gap-10 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                    <a href="#about" class="hover:text-navy transition-colors">About</a>
+                    <a href="#insights" class="hover:text-navy transition-colors">News</a>
+                    <a href="#research" class="hover:text-navy transition-colors">Research</a>
+                    <a href="#contact" class="hover:text-navy transition-colors">Contact</a>
                 </nav>
             </div>
-            <div class="text-center text-xs text-gray-600">
+            <div class="text-center text-[10px] text-gray-300 font-bold tracking-[0.2em] uppercase border-t border-gray-50 pt-10">
                 <p>&copy; 2026 CJ-Lab. All rights reserved.</p>
             </div>
         </div>
@@ -396,38 +385,53 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const firebaseConfig = JSON.parse(__firebase_config);
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-
-        let user = null;
-
-        const initAuth = async () => {
-            try {
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-            } catch (err) { console.error("Auth failed:", err); }
-        };
-
-        onAuthStateChanged(auth, (u) => {
-            user = u;
-            if (user) {
-                loadReports();
+        // 環境変数からの設定読み込み (GitHub等で動かす場合はここを自分の設定に書き換えてください)
+        let firebaseConfig = {};
+        try {
+            if (typeof __firebase_config !== 'undefined') {
+                firebaseConfig = JSON.parse(__firebase_config);
             }
-        });
+        } catch (e) {
+            console.warn("Firebase config could not be loaded from environment.");
+        }
 
-        initAuth();
+        // Firebase設定が空でないかチェック
+        const isFirebaseReady = firebaseConfig && firebaseConfig.apiKey;
 
-        // Load News/Reports
-        const loadReports = () => {
-            if (!user) return;
+        let app, auth, db, user = null;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const ADMIN_PASS = "admin123";
+
+        if (isFirebaseReady) {
+            app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+
+            const initAuth = async () => {
+                try {
+                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                        await signInWithCustomToken(auth, __initial_auth_token);
+                    } else {
+                        await signInAnonymously(auth);
+                    }
+                } catch (err) { console.error("Auth failed:", err); }
+            };
+
+            onAuthStateChanged(auth, (u) => {
+                user = u;
+                if (user) loadReports();
+            });
+
+            initAuth();
+        } else {
+            console.error("Firebase is not configured. Some features will not work.");
+            document.getElementById('loading-reports').innerHTML = "Firebase configuration is missing.";
+        }
+
+        function loadReports() {
+            if (!user || !db) return;
             const reportsRef = collection(db, 'artifacts', appId, 'public', 'data', 'reports');
             
             onSnapshot(reportsRef, (snapshot) => {
@@ -439,10 +443,7 @@
                 reportList.innerHTML = '';
 
                 let reports = [];
-                snapshot.forEach((doc) => {
-                    reports.push({ id: doc.id, ...doc.data() });
-                });
-
+                snapshot.forEach((doc) => reports.push({ id: doc.id, ...doc.data() }));
                 reports.sort((a, b) => new Date(b.date) - new Date(a.date));
 
                 if (reports.length === 0) {
@@ -451,26 +452,25 @@
                     noReports.classList.add('hidden');
                     reports.forEach((report) => {
                         const article = document.createElement('article');
-                        article.className = 'group py-8 border-b border-gray-100 first:pt-0 fade-up is-visible';
+                        article.className = 'group py-10 border-b border-gray-100 first:pt-0';
                         
                         let linkHTML = report.url ? `
-                            <div class="mt-4">
-                                <a href="${report.url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-xs font-bold text-navy hover:text-blue-600 border-b border-navy hover:border-blue-600 pb-1 transition-all">
-                                    <i data-lucide="external-link" class="w-3.5 h-3.5 mr-1.5"></i>
-                                    詳細を表示
+                            <div class="mt-6">
+                                <a href="${report.url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-[10px] font-bold text-navy hover:text-navy-light tracking-[0.2em] uppercase border-b border-navy/20 pb-1 transition-all">
+                                    Read Detailed Report <i data-lucide="arrow-right" class="w-3 h-3 ml-2"></i>
                                 </a>
                             </div>
                         ` : '';
 
                         article.innerHTML = `
-                            <div class="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-6 mb-3">
-                                <time class="text-sm font-mono text-gray-500 shrink-0">${report.date.replace(/-/g, '.')}</time>
-                                <span class="text-[10px] font-bold tracking-tighter text-navy border border-navy px-2 py-0.5 rounded-sm inline-block w-fit uppercase">${report.category}</span>
+                            <div class="flex items-center gap-4 mb-4">
+                                <time class="text-xs font-mono font-bold text-gray-400 tracking-tighter">${report.date.replace(/-/g, '.')}</time>
+                                <span class="text-[9px] font-bold text-navy tracking-widest uppercase border border-navy/10 px-2 py-0.5 rounded-sm">${report.category}</span>
                             </div>
-                            <h4 class="text-xl font-serif font-medium text-navy mb-3 group-hover:text-navy-light transition-colors">
+                            <h4 class="text-xl md:text-2xl font-serif font-medium text-navy mb-4 group-hover:text-navy-light transition-colors">
                                 ${report.title}
                             </h4>
-                            <p class="text-gray-600 text-sm leading-relaxed">
+                            <p class="text-gray-500 text-sm leading-relaxed max-w-4xl font-light">
                                 ${report.summary}
                             </p>
                             ${linkHTML}
@@ -482,90 +482,100 @@
             }, (err) => console.error(err));
         };
 
-        // Report Submission
+        // Admin Access Logic
+        const loginTrigger = document.getElementById('admin-login-trigger');
+        const adminSection = document.getElementById('admin-section');
+        const logoutBtn = document.getElementById('admin-logout');
+
+        loginTrigger.addEventListener('click', () => {
+            const input = prompt("管理者パスワードを入力してください:");
+            if (input === ADMIN_PASS) {
+                adminSection.classList.add('authorized');
+                adminSection.scrollIntoView({ behavior: 'smooth' });
+            } else if (input !== null) {
+                console.log("Invalid access attempt.");
+            }
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            adminSection.classList.remove('authorized');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Forms Logic
         const reportForm = document.getElementById('report-form');
-        const statusMsg = document.getElementById('status-message');
-        const submitBtn = document.getElementById('submit-btn');
-
-        reportForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            if (!user) return;
-
-            const title = document.getElementById('form-title').value;
-            const date = document.getElementById('form-date').value;
-            const category = document.getElementById('form-category').value;
-            const summary = document.getElementById('form-summary').value;
-            const url = document.getElementById('form-url').value;
-
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<div class="spinner"></div>';
-
-            try {
-                const reportsRef = collection(db, 'artifacts', appId, 'public', 'data', 'reports');
-                await addDoc(reportsRef, {
-                    title, date, category, summary, url,
-                    createdAt: new Date().toISOString()
-                });
-                statusMsg.textContent = "公開しました。";
-                statusMsg.className = "mt-4 text-center text-sm font-medium text-green-600 block";
-                reportForm.reset();
-                setTimeout(() => statusMsg.classList.add('hidden'), 5000);
-            } catch (err) {
-                statusMsg.textContent = "送信に失敗しました。";
-                statusMsg.className = "mt-4 text-center text-sm font-medium text-red-600 block";
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i data-lucide="upload-cloud" class="w-4 h-4"></i> レポートを公開する';
-                lucide.createIcons();
-            }
-        });
-
-        // Contact Form Handling
         const contactForm = document.getElementById('contact-form');
-        const contactStatus = document.getElementById('contact-status');
-        const contactSubmit = document.getElementById('contact-submit');
 
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            if (!user) return;
+        if (reportForm) {
+            reportForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (!user || !db) return;
+                const submitBtn = document.getElementById('submit-btn');
+                const statusMsg = document.getElementById('status-message');
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'PUBLISHING...';
 
-            contactSubmit.disabled = true;
-            contactSubmit.innerHTML = '<div class="spinner border-white/30 border-left-white"></div>';
+                try {
+                    const reportsRef = collection(db, 'artifacts', appId, 'public', 'data', 'reports');
+                    await addDoc(reportsRef, {
+                        title: document.getElementById('form-title').value,
+                        date: document.getElementById('form-date').value,
+                        category: document.getElementById('form-category').value,
+                        summary: document.getElementById('form-summary').value,
+                        url: document.getElementById('form-url').value,
+                        createdAt: new Date().toISOString()
+                    });
+                    statusMsg.textContent = "投稿が完了しました。";
+                    statusMsg.className = "mt-4 text-center text-sm font-bold text-green-600 block";
+                    reportForm.reset();
+                } catch (err) {
+                    statusMsg.textContent = "投稿に失敗しました。";
+                    statusMsg.className = "mt-4 text-center text-sm font-bold text-red-600 block";
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Publish Insight';
+                    setTimeout(() => statusMsg.classList.add('hidden'), 5000);
+                }
+            });
+        }
 
-            const name = document.getElementById('contact-name').value;
-            const email = document.getElementById('contact-email').value;
-            const message = document.getElementById('contact-message').value;
+        if (contactForm) {
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (!user || !db) return;
+                const contactSubmit = document.getElementById('contact-submit');
+                contactSubmit.disabled = true;
+                contactSubmit.textContent = 'SENDING...';
 
-            try {
-                // Save to private data collection
-                const contactRef = collection(db, 'artifacts', appId, 'users', user.uid, 'inquiries');
-                await addDoc(contactRef, {
-                    name, email, message,
-                    timestamp: new Date().toISOString()
-                });
-
-                contactStatus.textContent = "お問い合わせありがとうございます。送信が完了しました。";
-                contactStatus.className = "mt-4 text-center text-sm font-medium text-green-600 block";
-                contactForm.reset();
-            } catch (err) {
-                contactStatus.textContent = "エラーが発生しました。時間を置いて再度お試しください。";
-                contactStatus.className = "mt-4 text-center text-sm font-medium text-red-600 block";
-            } finally {
-                contactSubmit.disabled = false;
-                contactSubmit.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> 送信する';
-                lucide.createIcons();
-            }
-        });
+                try {
+                    const contactRef = collection(db, 'artifacts', appId, 'users', user.uid, 'inquiries');
+                    await addDoc(contactRef, {
+                        name: document.getElementById('contact-name').value,
+                        org: document.getElementById('contact-org').value,
+                        email: document.getElementById('contact-email').value,
+                        message: document.getElementById('contact-message').value,
+                        timestamp: new Date().toISOString()
+                    });
+                    document.getElementById('contact-status').textContent = '送信完了いたしました。';
+                    document.getElementById('contact-status').className = 'mt-4 text-center text-xs font-bold text-green-600 block';
+                    contactForm.reset();
+                } catch (err) {
+                    document.getElementById('contact-status').textContent = '送信に失敗しました。';
+                    document.getElementById('contact-status').className = 'mt-4 text-center text-xs font-bold text-red-600 block';
+                } finally {
+                    contactSubmit.disabled = false;
+                    contactSubmit.textContent = 'Send Message';
+                }
+            });
+        }
 
         // UI Helpers
         lucide.createIcons();
-        const navBtn = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const menuIcon = document.getElementById('menu-icon');
-
-        navBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            menuIcon.setAttribute('data-lucide', mobileMenu.classList.contains('hidden') ? 'menu' : 'x');
+        document.getElementById('mobile-menu-button').addEventListener('click', () => {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            menu.classList.toggle('hidden');
+            icon.setAttribute('data-lucide', menu.classList.contains('hidden') ? 'menu' : 'x');
             lucide.createIcons();
         });
 
