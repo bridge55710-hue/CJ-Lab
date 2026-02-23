@@ -250,7 +250,7 @@
                         </div>
                         <div class="space-y-6 text-base md:text-lg leading-relaxed">
                             <p>
-                                重要なのは、実行可能であること、持続可能であること、そして戦略として一貫していることです。CJ-Labは、短期的な政策論争を超え、中長期的視野から政策の優先順位と選択肢を明確化します。
+                                重要なのは、実行可能であること、持続可能であること、および戦略として一貫していることです。CJ-Labは、短期的な政策論争を超え、中長期的視野から政策の優先順位と選択肢を明確化します。
                             </p>
                         </div>
                     </div>
@@ -347,8 +347,8 @@
                             <textarea id="form-summary" rows="3" required placeholder="150文字程度の要約" class="w-full px-4 py-2 bg-surface border border-gray-200 text-sm focus:outline-none"></textarea>
                         </div>
                         <div>
-                            <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">外部リンク URL（任意）</label>
-                            <input type="url" id="form-url" placeholder="https://..." class="w-full px-4 py-2 bg-surface border border-gray-200 text-sm focus:outline-none">
+                            <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">外部リンク URL（Google Drive等）</label>
+                            <input type="url" id="form-url" placeholder="https://drive.google.com/..." class="w-full px-4 py-2 bg-surface border border-gray-200 text-sm focus:outline-none">
                         </div>
                         
                         <button type="submit" id="submit-btn" class="w-full bg-navy text-white py-4 text-xs font-bold uppercase tracking-[0.3em] hover:bg-navy-light transition-all rounded-sm">
@@ -387,22 +387,22 @@
         import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // 環境変数からの設定読み込み (GitHub等で動かす場合はここを自分の設定に書き換えてください)
-        let firebaseConfig = {};
+        // Global state
+        let app, auth, db, user = null;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'cj-lab-official';
+        const ADMIN_PASS = "admin123";
+
+        // Firebase Config Loading
+        let firebaseConfig = null;
         try {
-            if (typeof __firebase_config !== 'undefined') {
+            if (typeof __firebase_config !== 'undefined' && __firebase_config) {
                 firebaseConfig = JSON.parse(__firebase_config);
             }
         } catch (e) {
-            console.warn("Firebase config could not be loaded from environment.");
+            console.error("Firebase config parse error:", e);
         }
 
-        // Firebase設定が空でないかチェック
         const isFirebaseReady = firebaseConfig && firebaseConfig.apiKey;
-
-        let app, auth, db, user = null;
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const ADMIN_PASS = "admin123";
 
         if (isFirebaseReady) {
             app = initializeApp(firebaseConfig);
@@ -416,18 +416,25 @@
                     } else {
                         await signInAnonymously(auth);
                     }
-                } catch (err) { console.error("Auth failed:", err); }
+                    console.log("Firebase Auth initialized.");
+                } catch (err) { 
+                    console.error("Auth failed:", err); 
+                }
             };
 
             onAuthStateChanged(auth, (u) => {
                 user = u;
-                if (user) loadReports();
+                if (user) {
+                    console.log("Logged in as:", user.uid);
+                    loadReports();
+                }
             });
 
             initAuth();
         } else {
-            console.error("Firebase is not configured. Some features will not work.");
-            document.getElementById('loading-reports').innerHTML = "Firebase configuration is missing.";
+            const loadingEl = document.getElementById('loading-reports');
+            if (loadingEl) loadingEl.innerHTML = "Firebase configuration is missing. Please check your environment variables.";
+            console.error("Firebase configuration is missing. Database features will be unavailable.");
         }
 
         function loadReports() {
@@ -439,17 +446,17 @@
                 const loading = document.getElementById('loading-reports');
                 const noReports = document.getElementById('no-reports');
                 
-                loading.classList.add('hidden');
-                reportList.innerHTML = '';
+                if(loading) loading.classList.add('hidden');
+                if(reportList) reportList.innerHTML = '';
 
                 let reports = [];
                 snapshot.forEach((doc) => reports.push({ id: doc.id, ...doc.data() }));
                 reports.sort((a, b) => new Date(b.date) - new Date(a.date));
 
                 if (reports.length === 0) {
-                    noReports.classList.remove('hidden');
+                    if(noReports) noReports.classList.remove('hidden');
                 } else {
-                    noReports.classList.add('hidden');
+                    if(noReports) noReports.classList.add('hidden');
                     reports.forEach((report) => {
                         const article = document.createElement('article');
                         article.className = 'group py-10 border-b border-gray-100 first:pt-0';
@@ -464,7 +471,7 @@
 
                         article.innerHTML = `
                             <div class="flex items-center gap-4 mb-4">
-                                <time class="text-xs font-mono font-bold text-gray-400 tracking-tighter">${report.date.replace(/-/g, '.')}</time>
+                                <time class="text-xs font-mono font-bold text-gray-400 tracking-tighter">${(report.date || '').replace(/-/g, '.')}</time>
                                 <span class="text-[9px] font-bold text-navy tracking-widest uppercase border border-navy/10 px-2 py-0.5 rounded-sm">${report.category}</span>
                             </div>
                             <h4 class="text-xl md:text-2xl font-serif font-medium text-navy mb-4 group-hover:text-navy-light transition-colors">
@@ -479,7 +486,7 @@
                     });
                     lucide.createIcons();
                 }
-            }, (err) => console.error(err));
+            }, (err) => console.error("Firestore read error:", err));
         };
 
         // Admin Access Logic
@@ -493,7 +500,7 @@
                 adminSection.classList.add('authorized');
                 adminSection.scrollIntoView({ behavior: 'smooth' });
             } else if (input !== null) {
-                console.log("Invalid access attempt.");
+                alert("パスワードが正しくありません。");
             }
         });
 
@@ -509,7 +516,13 @@
         if (reportForm) {
             reportForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                if (!user || !db) return;
+                
+                // Firebase check
+                if (!isFirebaseReady || !db || !user) {
+                    alert("Firebaseが初期化されていないため、投稿できません。");
+                    return;
+                }
+
                 const submitBtn = document.getElementById('submit-btn');
                 const statusMsg = document.getElementById('status-message');
                 submitBtn.disabled = true;
@@ -517,19 +530,23 @@
 
                 try {
                     const reportsRef = collection(db, 'artifacts', appId, 'public', 'data', 'reports');
-                    await addDoc(reportsRef, {
+                    const payload = {
                         title: document.getElementById('form-title').value,
                         date: document.getElementById('form-date').value,
                         category: document.getElementById('form-category').value,
                         summary: document.getElementById('form-summary').value,
                         url: document.getElementById('form-url').value,
                         createdAt: new Date().toISOString()
-                    });
+                    };
+
+                    await addDoc(reportsRef, payload);
+                    
                     statusMsg.textContent = "投稿が完了しました。";
                     statusMsg.className = "mt-4 text-center text-sm font-bold text-green-600 block";
                     reportForm.reset();
                 } catch (err) {
-                    statusMsg.textContent = "投稿に失敗しました。";
+                    console.error("Submission error:", err);
+                    statusMsg.textContent = "投稿に失敗しました: " + err.message;
                     statusMsg.className = "mt-4 text-center text-sm font-bold text-red-600 block";
                 } finally {
                     submitBtn.disabled = false;
@@ -542,7 +559,10 @@
         if (contactForm) {
             contactForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                if (!user || !db) return;
+                if (!isFirebaseReady || !db || !user) {
+                    alert("システム準備中です。しばらくお待ちください。");
+                    return;
+                }
                 const contactSubmit = document.getElementById('contact-submit');
                 contactSubmit.disabled = true;
                 contactSubmit.textContent = 'SENDING...';
@@ -560,6 +580,7 @@
                     document.getElementById('contact-status').className = 'mt-4 text-center text-xs font-bold text-green-600 block';
                     contactForm.reset();
                 } catch (err) {
+                    console.error("Contact error:", err);
                     document.getElementById('contact-status').textContent = '送信に失敗しました。';
                     document.getElementById('contact-status').className = 'mt-4 text-center text-xs font-bold text-red-600 block';
                 } finally {
